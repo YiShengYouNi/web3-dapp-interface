@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@vercel/next"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_PROJECT_ID": "@next_public_project_id",
+    "NEXT_PUBLIC_RPC_SEPOLIA": "@next_public_rpc_sepolia",
+    "NEXT_PUBLIC_CONTRACT_ADDRESS": "@next_public_contract_address"
+  }
+}
