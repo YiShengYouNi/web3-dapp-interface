@@ -1,0 +1,6 @@
+NEXT_PUBLIC_PROJECT_ID=your_prouect_id
+NEXT_PUBLIC_API_KEY= your_api_key
+NEXT_PUBLIC_API_URL= https://api.example.com
+NEXT_PUBLIC_ANALYTICS_ID= your_analytics_id
+NEXT_PUBLIC_FEATURE_FLAG= true
+NEXT_PUBLIC_THEME_COLOR= #ffffff
