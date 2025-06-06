@@ -1,5 +1,5 @@
-import { WagmiProvider } from 'wagmi';
-import { wagmiConfig } from '@/features/wallet/wagmi/wagmiClient';
+
+import { WagmiWrapper } from '@/features/wallet/provider/WagmiWrapper';
 import "./globals.css";
 
 
@@ -12,9 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <WagmiProvider config={wagmiConfig}>
+        <WagmiWrapper>
         {children}
-        </WagmiProvider>
+        </WagmiWrapper>
       </body>
     </html>
   );

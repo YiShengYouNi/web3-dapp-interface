@@ -1,6 +1,6 @@
 
 import styles from "./page.module.css";
-import WalletButton from "@/components/wallet/WalletButton";
+import {WalletButton} from "@/features/wallet/components/WalletButton";
 
 export default function Home() {
   return (

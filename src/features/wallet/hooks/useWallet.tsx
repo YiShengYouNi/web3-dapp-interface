@@ -1,4 +1,5 @@
 
+'use client'
 
 // features/wallet/hooks/useWallet.ts
 import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from 'wagmi'
