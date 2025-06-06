@@ -1,26 +1,29 @@
-
-'use client'
-
 // features/wallet/hooks/useWallet.ts
-import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from 'wagmi'
-import { supportedChains } from '../wagmi/chains'
+import { useAccount, useDisconnect, useChainId } from 'wagmi'
+import { useEffect } from 'react'
+import { useWalletStore } from '../store/wallet.store'
 
-export function useWallet() {
-  const { address, isConnected } = useAccount()
-  const { connect, connectors, isPending } = useConnect()
-  const { disconnect } = useDisconnect()
+export const useWallet = () => {
+  const { address, connector, isConnected } = useAccount()
   const chainId = useChainId()
-  const { switchChainAsync } = useSwitchChain()
+  const { disconnect } = useDisconnect()
+  const {  setAddress, setConnector, setChainId, reset} = useWalletStore()
+
+  useEffect(() => {
+    setAddress(address ?? null)
+    setConnector(connector ?? null)
+    setChainId(chainId?? null)
+  }, [address, connector, chainId, setAddress, setConnector, setChainId])
+
+  const disconnectWallet = () => {
+    disconnect()
+    reset()
+  }
 
   return {
     address,
-    isConnected,
-    connect,
-    connectors,
-    isPending,
-    disconnect,
     chainId,
-    switchChain: switchChainAsync,
-    currentChain: supportedChains.find(c => c.id === chainId)
+    isConnected,
+    disconnectWallet,
   }
 }

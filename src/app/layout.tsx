@@ -1,6 +1,6 @@
 
 import { WagmiWrapper } from '@/features/wallet/provider/WagmiWrapper';
-import "./globals.css";
+import '@/styles/globals.css'
 
 
 
