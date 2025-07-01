@@ -24,7 +24,7 @@ import {
 import { Copy, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useWalletListeners } from "../hooks/useWalletListeners";
-import { formatAddress } from "../utils/address";
+import { useWalletEnsName } from "../hooks/useWalletEnsName";
 import {
   getWalletLabel,
   walletIcons,
@@ -40,6 +40,7 @@ export function ConnectWalletButton() {
   const chainId = useChainId();
   const currentChain = chainMeta[chainId];
   useWalletListeners();
+  const { displayName } = useWalletEnsName();
   const [open, setOpen] = useState(false);
 
   const handleCopy = async () => {
@@ -54,7 +55,7 @@ export function ConnectWalletButton() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="flex items-center gap-2">
-            {formatAddress(address)} ⬇️
+            {displayName} ⬇️
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

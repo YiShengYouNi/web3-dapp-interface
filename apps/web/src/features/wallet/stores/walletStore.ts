@@ -1,15 +1,14 @@
-
 // ✅ src/features/wallet/stores/walletStore.ts
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface WalletState {
-  address?: string
-  isConnected: boolean
-  connector?: string
-  chainId?: number
-  setWallet: (data: Partial<WalletState>) => void
-  reset: () => void
+  address?: `0x${string}` | undefined;
+  isConnected: boolean;
+  connector?: string;
+  chainId?: number;
+  setWallet: (data: Partial<WalletState>) => void;
+  reset: () => void;
 }
 
 export const useWalletStore = create<WalletState>()(
@@ -30,13 +29,13 @@ export const useWalletStore = create<WalletState>()(
         }),
     }),
     {
-      name: 'wallet-store',
+      name: "wallet-store",
       partialize: (state) => ({
         address: state.address,
         isConnected: state.isConnected,
         connector: state.connector,
         chainId: state.chainId,
       }),
-    }
-  )
-)
+    },
+  ),
+);
