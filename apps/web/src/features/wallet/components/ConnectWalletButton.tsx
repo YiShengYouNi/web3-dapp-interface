@@ -25,6 +25,7 @@ import { Copy, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useWalletListeners } from "../hooks/useWalletListeners";
 import { useWalletEnsName } from "../hooks/useWalletEnsName";
+import { useIsContractWallet } from "../hooks/useIsContractWallet";
 import {
   getWalletLabel,
   walletIcons,
@@ -41,6 +42,7 @@ export function ConnectWalletButton() {
   const currentChain = chainMeta[chainId];
   useWalletListeners();
   const { displayName } = useWalletEnsName();
+  const isContractWallet = useIsContractWallet();
   const [open, setOpen] = useState(false);
 
   const handleCopy = async () => {
@@ -60,6 +62,9 @@ export function ConnectWalletButton() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Wallet</DropdownMenuLabel>
+          {isContractWallet && (
+            <span className="text-xs text-muted-foreground">合约钱包</span>
+          )}
           {currentChain && (
             <div className="flex items-center px-2 py-1 text-sm text-muted-foreground gap-2">
               <Image
@@ -84,11 +89,10 @@ export function ConnectWalletButton() {
     );
   }
 
-  visibleConnectors([...connectors]).forEach((c) => {
-    console.log(
-      `Connector: ${c.name} (${c.id}) - Ready: ${c.ready}, Pending: ${c.pending}, UID: ${c.uid}`,
-    );
-  });
+  if (connectors.length === 0) {
+    return <Button disabled>No wallet connectors available</Button>;
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
