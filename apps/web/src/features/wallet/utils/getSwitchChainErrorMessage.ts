@@ -1,4 +1,4 @@
-type SwitchChainError = {
+export type SwitchChainError = {
   code?: number
   name?: string
   shortMessage?: string
