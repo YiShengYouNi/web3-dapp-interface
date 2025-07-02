@@ -1,6 +1,5 @@
 import { useAccount, usePublicClient } from "wagmi";
 import { useEffect, useState } from "react";
-import { getPublicClient } from "wagmi/actions";
 
 export function useIsContractWallet(): boolean | undefined {
   /**

@@ -6,36 +6,61 @@ interface WalletState {
   address?: `0x${string}` | undefined;
   isConnected: boolean;
   connector?: string;
+  connectorId: string | undefined;
   chainId?: number;
   setWallet: (data: Partial<WalletState>) => void;
   reset: () => void;
 }
 
 export const useWalletStore = create<WalletState>()(
-  persist(
-    (set) => ({
-      address: undefined,
-      isConnected: false,
-      connector: undefined,
-      chainId: undefined,
-
-      setWallet: (data) => set((state) => ({ ...state, ...data })),
-      reset: () =>
-        set({
-          address: undefined,
-          isConnected: false,
-          connector: undefined,
-          chainId: undefined,
-        }),
-    }),
-    {
-      name: "wallet-store",
-      partialize: (state) => ({
-        address: state.address,
-        isConnected: state.isConnected,
-        connector: state.connector,
-        chainId: state.chainId,
+  (set) => ({
+    address: undefined,
+    isConnected: false,
+    connector: undefined,
+    connectorId: undefined,
+    chainId: undefined,
+    setWallet: (data) => set((state) => ({ ...state, ...data })),
+    reset: () =>
+      set({
+        address: undefined,
+        isConnected: false,
+        connector: undefined,
+        connectorId: undefined,
+        chainId: undefined,
       }),
-    },
-  ),
+  }),
+  // persist(
+  //   (set) => ({
+  //     address: undefined,
+  //     isConnected: false,
+  //     connector: undefined,
+  //     connectorId: undefined,
+  //     chainId: undefined,
+  //     hasHydrated: false,
+  //     setHydrated: () => set({ hasHydrated: true }),
+  //     setWallet: (data) => set((state) => ({ ...state, ...data })),
+  //     reset: () =>
+  //       set({
+  //         address: undefined,
+  //         isConnected: false,
+  //         connector: undefined,
+  //         connectorId: undefined,
+  //         chainId: undefined,
+  //       }),
+  //   }),
+  //   {
+  //     name: "wallet-store",
+  //     partialize: (state) => ({
+  //       address: state.address,
+  //       isConnected: state.isConnected,
+  //       connector: state.connector,
+  //       connectorId: state.connectorId,
+  //       chainId: state.chainId,
+
+  //     }),
+  //     onRehydrateStorage: () => (state) => {
+  //       state?.setHydrated(); // ✅ hydration 完成后标记
+  //     },
+  //   },
+  // ),
 );

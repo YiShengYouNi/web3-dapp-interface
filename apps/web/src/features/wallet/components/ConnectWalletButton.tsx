@@ -1,6 +1,12 @@
 "use client";
 // ✅ src/features/wallet/components/ConnectWalletButton.tsx
-import { useAccount, useConnect, useDisconnect, useChainId } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useChainId,
+  type Connector,
+} from "wagmi";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
@@ -23,7 +29,7 @@ import {
 } from "@/components/ui/dialog";
 import { Copy, LogOut } from "lucide-react";
 import { useState } from "react";
-import { useWalletListeners } from "../hooks/useWalletListeners";
+import { useWalletStore } from "../stores/walletStore";
 import { useWalletEnsName } from "../hooks/useWalletEnsName";
 import { useIsContractWallet } from "../hooks/useIsContractWallet";
 import {
@@ -33,23 +39,49 @@ import {
 } from "../utils/connectors";
 
 import { chainMeta } from "../utils/chainMeta";
+import { showError, showSuccess } from "@/lib/toast";
 
 export function ConnectWalletButton() {
-  const { connect, connectors } = useConnect();
+  const { connectors, connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
-  const currentChain = chainMeta[chainId];
-  useWalletListeners();
   const { displayName } = useWalletEnsName();
   const isContractWallet = useIsContractWallet();
   const [open, setOpen] = useState(false);
 
+  const currentChain = chainMeta[chainId];
+
   const handleCopy = async () => {
     if (address) {
       await navigator.clipboard.writeText(address);
-      // Toaster.success('Address copied')
+      showSuccess("Address copied");
     }
+  };
+
+  const handleConnect = async (connector: Connector) => {
+    try {
+      const result = await connectAsync({ connector });
+
+      useWalletStore.getState().setWallet({
+        address: result.accounts[0],
+        chainId: result.chainId,
+        isConnected: true,
+        connectorId: connector.id,
+      });
+
+      localStorage.setItem("lastConnectorId", connector.id);
+      setOpen(false);
+    } catch (err) {
+      console.error("Connect error:", err);
+      showError("Failed to connect wallet");
+    }
+  };
+
+  const handleDisConnect = () => {
+    disconnect();
+    useWalletStore.getState().reset();
+    localStorage.removeItem("lastConnectorId");
   };
 
   if (isConnected) {
@@ -81,7 +113,7 @@ export function ConnectWalletButton() {
             <Copy className="w-4 h-4 mr-2" /> Copy Address
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => disconnect()}>
+          <DropdownMenuItem onClick={() => handleDisConnect()}>
             <LogOut className="w-4 h-4 mr-2" /> Disconnect
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -90,7 +122,7 @@ export function ConnectWalletButton() {
   }
 
   if (connectors.length === 0) {
-    return <Button disabled>No wallet connectors available</Button>;
+    // return <Button disabled>No wallet connectors available</Button>;
   }
 
   return (
@@ -113,8 +145,7 @@ export function ConnectWalletButton() {
                 key={c.uid}
                 disabled={c.ready === false}
                 onClick={() => {
-                  connect({ connector: c });
-                  setOpen(false);
+                  handleConnect(c);
                 }}
                 className="w-full flex items-center justify-start gap-3"
                 variant="ghost"
