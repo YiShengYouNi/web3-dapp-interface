@@ -61,7 +61,9 @@ const eslintConfig = [
       'dist/**',
       'build/**',
       'coverage/**',
-      '**/*.config.*', // 忽略配置文件（可选）
+      '**/*.config.*',
+      '*.json',
+      '**/*.md',
     ],
   },
 ]
