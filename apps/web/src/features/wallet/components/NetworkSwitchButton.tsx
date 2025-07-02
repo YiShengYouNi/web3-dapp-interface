@@ -1,40 +1,40 @@
 // features/wallet/components/NetworkSwitchDropdown.tsx
 
-"use client";
+'use client'
 
-import { useSwitchChain, useChainId, useAccount } from "wagmi";
+import { useSwitchChain, useChainId, useAccount } from 'wagmi'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { showError, showInfo } from "@/lib/toast";
-import { getSwitchChainErrorMessage } from "../utils/getSwitchChainErrorMessage";
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { showError, showInfo } from '@/lib/toast'
+import { getSwitchChainErrorMessage } from '../utils/getSwitchChainErrorMessage'
 
 export function NetworkSwitchButton() {
-  const { switchChainAsync, chains } = useSwitchChain();
-  const chainId = useChainId();
-  const { isConnected } = useAccount();
+  const { switchChainAsync, chains } = useSwitchChain()
+  const chainId = useChainId()
+  const { isConnected } = useAccount()
 
   async function handleSwitch(chainId: number) {
     if (!isConnected) {
-      return showError("Please connect your wallet first.");
+      return showError('Please connect your wallet first.')
     }
 
     try {
-      await switchChainAsync({ chainId });
-      showInfo(`Switched to chain ${chainId}`);
+      await switchChainAsync({ chainId })
+      showInfo(`Switched to chain ${chainId}`)
     } catch (error) {
-      showError(getSwitchChainErrorMessage(error));
+      showError(getSwitchChainErrorMessage(error))
     }
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{"Select Network"}</Button>
+        <Button variant="outline">{'Select Network'}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {chains.map((c) => (
@@ -48,5 +48,5 @@ export function NetworkSwitchButton() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

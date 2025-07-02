@@ -1,5 +1,5 @@
-import { useAccount, usePublicClient } from "wagmi";
-import { useEffect, useState } from "react";
+import { useAccount, usePublicClient } from 'wagmi'
+import { useEffect, useState } from 'react'
 
 export function useIsContractWallet(): boolean | undefined {
   /**
@@ -7,22 +7,22 @@ export function useIsContractWallet(): boolean | undefined {
    * 使用原则：以响应式依赖为主，以 store 为状态集中为辅
    * useAccount() 是 wagmi 内部响应式状态，自动跟踪更新
    */
-  const { address, chainId } = useAccount();
-  const client = usePublicClient();
-  const [isContract, setIsContract] = useState<boolean | undefined>();
+  const { address, chainId } = useAccount()
+  const client = usePublicClient()
+  const [isContract, setIsContract] = useState<boolean | undefined>()
 
   useEffect(() => {
-    if (!address || !chainId || !client) return;
+    if (!address || !chainId || !client) return
 
     client
       .getBytecode({ address })
       .then((bytecode) => {
-        setIsContract(!!bytecode);
+        setIsContract(!!bytecode)
       })
       .catch(() => {
-        setIsContract(undefined);
-      });
-  }, [address, chainId]);
+        setIsContract(undefined)
+      })
+  }, [address, chainId, client])
 
-  return isContract;
+  return isContract
 }

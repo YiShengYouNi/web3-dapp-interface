@@ -1,15 +1,14 @@
 // ✅ src/features/wallet/stores/walletStore.ts
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand'
 
 interface WalletState {
-  address?: `0x${string}` | undefined;
-  isConnected: boolean;
-  connector?: string;
-  connectorId: string | undefined;
-  chainId?: number;
-  setWallet: (data: Partial<WalletState>) => void;
-  reset: () => void;
+  address?: `0x${string}` | undefined
+  isConnected: boolean
+  connector?: string
+  connectorId: string | undefined
+  chainId?: number
+  setWallet: (data: Partial<WalletState>) => void
+  reset: () => void
 }
 
 export const useWalletStore = create<WalletState>()(
@@ -28,7 +27,7 @@ export const useWalletStore = create<WalletState>()(
         connectorId: undefined,
         chainId: undefined,
       }),
-  }),
+  })
   // persist(
   //   (set) => ({
   //     address: undefined,
@@ -63,4 +62,4 @@ export const useWalletStore = create<WalletState>()(
   //     },
   //   },
   // ),
-);
+)

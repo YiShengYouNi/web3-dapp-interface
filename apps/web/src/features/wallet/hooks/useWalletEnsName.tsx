@@ -1,5 +1,5 @@
-import { useEnsName, useAccount } from "wagmi";
-import { formatAddress } from "../utils/address";
+import { useEnsName, useAccount } from 'wagmi'
+import { formatAddress } from '../utils/address'
 
 export function useWalletEnsName() {
   /**
@@ -9,12 +9,12 @@ export function useWalletEnsName() {
    * 如果在 zustand 中存储，可能会导致组件更新不及时。
    * 所以这里直接使用 wagmi 的 useAccount hook 获取 address。
    */
-  const { address } = useAccount();
-  const { data: ensName, isLoading } = useEnsName({ address });
+  const { address } = useAccount()
+  const { data: ensName, isLoading } = useEnsName({ address })
 
   return {
     ensName,
     isLoading,
     displayName: ensName || formatAddress(address),
-  };
+  }
 }

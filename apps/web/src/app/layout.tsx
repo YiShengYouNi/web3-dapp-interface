@@ -1,11 +1,11 @@
-import "./globals.css";
+import './globals.css'
 
-import Providers from "@/providers";
+import Providers from '@/providers'
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -13,5 +13,5 @@ export default function RootLayout({
         <Providers>{children}</Providers>
       </body>
     </html>
-  );
+  )
 }

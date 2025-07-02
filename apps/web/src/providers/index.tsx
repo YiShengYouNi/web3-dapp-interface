@@ -1,7 +1,7 @@
-"use client";
-import { ReactNode } from "react";
-import WalletWagmiProvider from "./WalletWagmiProvider";
-import WalletClientProvider from "./WalletClientProvider";
+'use client'
+import { ReactNode } from 'react'
+import WalletWagmiProvider from './WalletWagmiProvider'
+import WalletClientProvider from './WalletClientProvider'
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
@@ -9,5 +9,5 @@ export default function Providers({ children }: { children: ReactNode }) {
       <WalletClientProvider />
       {children}
     </WalletWagmiProvider>
-  );
+  )
 }
