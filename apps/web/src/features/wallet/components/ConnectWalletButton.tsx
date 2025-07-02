@@ -32,6 +32,7 @@ import { useState } from "react";
 import { useWalletStore } from "../stores/walletStore";
 import { useWalletEnsName } from "../hooks/useWalletEnsName";
 import { useIsContractWallet } from "../hooks/useIsContractWallet";
+import { NetworkSwitchButton } from "./NetworkSwitchButton";
 import {
   getWalletLabel,
   walletIcons,
@@ -116,13 +117,13 @@ export function ConnectWalletButton() {
           <DropdownMenuItem onClick={() => handleDisConnect()}>
             <LogOut className="w-4 h-4 mr-2" /> Disconnect
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <div className="px-2 py-1">
+            <NetworkSwitchButton />
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     );
-  }
-
-  if (connectors.length === 0) {
-    // return <Button disabled>No wallet connectors available</Button>;
   }
 
   return (
