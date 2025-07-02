@@ -28,7 +28,8 @@ apps/contracts/typechain/
 apps/contracts/.env
 
 # Vscode
-.vscode/
+.vscode/launch.*
+.vscode/tasks.*
 
 # Environment files
 .env
