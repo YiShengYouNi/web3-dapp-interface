@@ -31,6 +31,7 @@ import { getWalletLabel, walletIcons, visibleConnectors } from '../utils/connect
 
 import { chainMeta } from '../utils/chainMeta'
 import { showError, showSuccess } from '@/lib/toast'
+import { SignInCard } from '@/features/auth/components/SignInCard'
 
 export function ConnectWalletButton() {
   const { connectors, connectAsync } = useConnect()
@@ -82,6 +83,7 @@ export function ConnectWalletButton() {
           <Button variant="outline" className="flex items-center gap-2">
             {displayName} ⬇️
           </Button>
+          <SignInCard />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Wallet</DropdownMenuLabel>
