@@ -8,8 +8,11 @@ export interface AuthMessageResponse {
   message: any
 }
 
-export async function getAuthMessage(address: string): Promise<AuthMessageResponse> {
-  const res = await fetch(`${API_BASE_URL}/auth/message?address=${address}`)
+export async function getAuthMessage(
+  address: string,
+  chainId: number
+): Promise<AuthMessageResponse> {
+  const res = await fetch(`${API_BASE_URL}/auth/message?address=${address}&chainId=${chainId}`)
   if (!res.ok) throw new Error('Failed to get auth message')
   return await res.json()
 }

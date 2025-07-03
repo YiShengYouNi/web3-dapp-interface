@@ -2,12 +2,19 @@
 
 'use client'
 
-import { useAccount } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import { useSignIn } from '../hooks/useSignIn'
+import { useWalletStore } from '@/features/wallet/stores/walletStore'
+import { useShallow } from 'zustand/react/shallow'
 
 export function SignInCard() {
-  const { address, isConnected } = useAccount()
+  const { address, isConnected } = useWalletStore(
+    useShallow((s) => ({
+      address: s.address,
+      isConnected: s.isConnected,
+    }))
+  ) // 选择器订阅模式
+
   const { signIn, isLoading, error, isSignedIn } = useSignIn()
 
   if (!isConnected) return null

@@ -3,14 +3,20 @@ import { Router } from 'express'
 const router = Router()
 
 router.get('/message', (req, res) => {
-  const { address } = req.query
+  const { address, chainId } = req.query
   const message = {
-    domain: { name: 'web3-login', version: '1', chainId: 1 },
+    domain: {
+      name: 'web3-login',
+      version: '1',
+      chainId,
+      verifyingContract: '0x0000000000000000000000000000000000000000',
+    },
     types: {
       EIP712Domain: [
         { name: 'name', type: 'string' },
         { name: 'version', type: 'string' },
         { name: 'chainId', type: 'uint256' },
+        { name: 'verifyingContract', type: 'address' },
       ],
       Auth: [
         { name: 'address', type: 'address' },
