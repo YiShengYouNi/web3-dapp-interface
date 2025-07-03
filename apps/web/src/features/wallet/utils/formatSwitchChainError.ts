@@ -5,7 +5,7 @@ export type SwitchChainError = {
   message?: string
 }
 
-export function getSwitchChainErrorMessage(error: SwitchChainError): string {
+export function formatSwitchChainError(error: SwitchChainError): string {
   if (error?.code === 4902) {
     return 'This chain is not added to your wallet.'
   }

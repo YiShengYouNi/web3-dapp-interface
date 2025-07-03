@@ -1,4 +1,4 @@
-import { ConnectWalletButton } from '@/features/wallet/components/ConnectWalletButton'
+import { ConnectWalletButton } from '@/features/wallet'
 import { SignInCard } from '@/features/auth/components/SignInCard'
 import { NetworkSwitchButton } from '@/features/wallet/components/NetworkSwitchButton'
 

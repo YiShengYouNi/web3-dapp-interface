@@ -1,31 +1,35 @@
-import type { Connector } from 'wagmi'
+import { createConfig, type CreateConnectorFn } from 'wagmi'
+import { http } from 'viem'
+import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors'
+import { mainnet, polygon, optimism, sepolia, base, polygonMumbai, arbitrum } from 'wagmi/chains'
 
-export const walletIcons: Record<string, string> = {
-  injected: '/wallets/metamask.svg',
-  walletConnect: '/wallets/walletconnect.svg',
-  coinbaseWallet: '/wallets/coinbase.svg',
-  phantom: '/wallets/phantom.svg',
-  okxWallet: '/wallets/okx.svg',
-  bitget: '/wallets/bitget.svg',
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID ?? '' // Replace with your actual project ID
+
+const chains = [sepolia, base, polygonMumbai, mainnet, polygon, optimism, arbitrum] as const
+
+const transports = {
+  [mainnet.id]: http(),
+  [sepolia.id]: http(),
+  [base.id]: http(),
+  [polygonMumbai.id]: http(),
+  [optimism.id]: http(),
+  [polygon.id]: http(),
+  [arbitrum.id]: http(),
 }
 
-export const visibleConnectors = (connectors: Connector[]) => {
-  const seen = new Set<string>()
-  return connectors.filter((connector) => {
-    const label = getWalletLabel(connector).toLowerCase()
-    if (seen.has(label)) return false
-    seen.add(label)
-    return true
-  })
+// ✅ 👇 connector 创建延迟执行，仅浏览器使用
+function getSafeConnectors(): readonly CreateConnectorFn[] {
+  if (typeof window === 'undefined') return []
+  return [
+    injected({ shimDisconnect: true }),
+    walletConnect({ projectId }),
+    coinbaseWallet({ appName: 'Web3DappInterface' }),
+  ]
 }
 
-export const getWalletLabel = (connector: Connector) => {
-  if (connector.id === 'injected') {
-    if (typeof window !== 'undefined' && window.ethereum?.isMetaMask) {
-      return 'MetaMask'
-    }
-    return 'Injected'
-  }
-
-  return connector.name
-}
+export const wagmiConfig = createConfig({
+  chains,
+  connectors: getSafeConnectors(),
+  transports, // Automatically connect to the last used wallet
+  ssr: true, // Enable SSR for wagmi
+})

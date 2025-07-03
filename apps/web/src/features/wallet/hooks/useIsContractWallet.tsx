@@ -1,3 +1,4 @@
+'use client'
 import { usePublicClient } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { useWalletStore } from '../stores/walletStore'

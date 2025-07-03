@@ -1,8 +1,5 @@
 'use client'
-import { useAutoConnect } from '@/features/wallet/hooks/useAutoConnect'
-import { useSyncWalletToStore } from '@/features/wallet/hooks/useSyncWalletToStore'
-import { useWalletEventListeners } from '@/features/wallet/hooks/useWalletEventListeners'
-
+import { useAutoConnect, useSyncWalletToStore, useWalletEventListeners } from '@/features/wallet'
 export default function WalletClientProvider() {
   useAutoConnect()
   useSyncWalletToStore()

@@ -11,10 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { showError, showInfo } from '@/lib/toast'
-import {
-  getSwitchChainErrorMessage,
-  type SwitchChainError,
-} from '../utils/getSwitchChainErrorMessage'
+import { formatSwitchChainError, type SwitchChainError } from '../utils/'
 import { useWalletStore } from '../stores/walletStore'
 import { useShallow } from 'zustand/react/shallow'
 
@@ -34,7 +31,7 @@ export function NetworkSwitchButton() {
       await switchChainAsync({ chainId })
       showInfo(`Switched to chain ${chainId}`)
     } catch (error) {
-      showError(getSwitchChainErrorMessage(error as SwitchChainError))
+      showError(formatSwitchChainError(error as SwitchChainError))
     }
   }
 

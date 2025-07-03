@@ -25,7 +25,7 @@ import { Copy, LogOut } from 'lucide-react'
 import { useState } from 'react'
 import { useWalletEnsName } from '../hooks/useWalletEnsName'
 import { useIsContractWallet } from '../hooks/useIsContractWallet'
-import { getWalletLabel, walletIcons, visibleConnectors } from '../utils/connectors'
+import { getWalletLabel, walletIcons, visibleConnectors } from '../utils'
 
 import { chainMeta } from '../utils/chainMeta'
 import { showError, showSuccess } from '@/lib/toast'
