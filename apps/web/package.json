@@ -9,7 +9,7 @@
     "lint": "next lint",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --write .",
-    "mock": "tsx mock-server/index.ts"
+    "mock": "tsx src/mock-server/index.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
