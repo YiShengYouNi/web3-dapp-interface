@@ -25,12 +25,10 @@ import { Copy, LogOut } from 'lucide-react'
 import { useState } from 'react'
 import { useWalletEnsName } from '../hooks/useWalletEnsName'
 import { useIsContractWallet } from '../hooks/useIsContractWallet'
-import { NetworkSwitchButton } from './NetworkSwitchButton'
 import { getWalletLabel, walletIcons, visibleConnectors } from '../utils/connectors'
 
 import { chainMeta } from '../utils/chainMeta'
 import { showError, showSuccess } from '@/lib/toast'
-import { SignInCard } from '@/features/auth/components/SignInCard'
 import { useWalletStore } from '../stores/walletStore'
 
 export function ConnectWalletButton() {
@@ -99,13 +97,8 @@ export function ConnectWalletButton() {
             <DropdownMenuItem onClick={() => handleDisConnect()}>
               <LogOut className="w-4 h-4 mr-2" /> Disconnect
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <div className="px-2 py-1">
-              <NetworkSwitchButton />
-            </div>
           </DropdownMenuContent>
         </DropdownMenu>
-        <SignInCard />
       </>
     )
   }

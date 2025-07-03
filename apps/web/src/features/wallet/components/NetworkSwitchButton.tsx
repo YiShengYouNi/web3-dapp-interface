@@ -38,10 +38,13 @@ export function NetworkSwitchButton() {
     }
   }
 
+  if (!isConnected) {
+    return null
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{'Select Network'}</Button>
+        <Button variant="outline">Select Network</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {chains.map((c) => (
