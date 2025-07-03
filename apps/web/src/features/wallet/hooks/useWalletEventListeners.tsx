@@ -1,13 +1,18 @@
 // features/wallet/hooks/useWalletEventListeners.ts
 'use client'
 import { useEffect, useRef } from 'react'
-import { useAccount, useChainId } from 'wagmi'
 import { useWalletStore } from '../stores/walletStore'
 import { showInfo } from '@/lib/toast'
+import { useShallow } from 'zustand/react/shallow'
 
 export function useWalletEventListeners() {
-  const { address, isConnected } = useAccount()
-  const chainId = useChainId()
+  const { address, isConnected, chainId } = useWalletStore(
+    useShallow((s) => ({
+      address: s.address,
+      isConnected: s.isConnected,
+      chainId: s.chainId,
+    }))
+  ) // 选择器订阅模式
 
   const reset = useWalletStore((state) => state.reset)
   const setWallet = useWalletStore((state) => state.setWallet)
@@ -21,7 +26,7 @@ export function useWalletEventListeners() {
 
     // 钱包断开
     if (!isConnected && prevAddress) {
-      reset()
+      reset() // 钱包状态重置
       showInfo('Wallet disconnected')
     }
     // 账户切换

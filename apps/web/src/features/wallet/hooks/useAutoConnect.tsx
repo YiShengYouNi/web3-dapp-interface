@@ -1,15 +1,14 @@
 // features/wallet/hooks/useAutoConnect.ts
 'use client'
 import { useEffect } from 'react'
-import { useConnect, useAccount } from 'wagmi'
+import { useConnect } from 'wagmi'
 import { useWalletStore } from '../stores/walletStore'
 import { showError } from '@/lib/toast'
 
 export function useAutoConnect() {
   const { connectAsync, connectors } = useConnect()
-  const { isConnected: wagmiIsConnected } = useAccount()
 
-  const isConnected = useWalletStore((state) => state.isConnected)
+  const isConnected = useWalletStore((state) => state.isConnected) //  选择器订阅模式
 
   const lastConnectorId =
     typeof window !== 'undefined' ? localStorage.getItem('lastConnectorId') : null
@@ -21,18 +20,11 @@ export function useAutoConnect() {
     if (!connector) return
 
     connectAsync({ connector })
-      .then((result) => {
-        useWalletStore.setState({
-          address: result.accounts[0],
-          chainId: result.chainId,
-          isConnected: true,
-          connectorId: connector.id,
-          connector: connector.name,
-        })
+      .then(() => {
+        // walletStore 更新逻辑在 useSyncWalletToStore（挂载根组件） 统一处理
       })
       .catch((err) => {
         showError('Auto connect failed: ' + err.message)
-        useWalletStore.setState({ isConnected: false })
       })
-  }, [wagmiIsConnected, isConnected, connectors, lastConnectorId, connectAsync])
+  }, [isConnected, connectors, lastConnectorId, connectAsync])
 }

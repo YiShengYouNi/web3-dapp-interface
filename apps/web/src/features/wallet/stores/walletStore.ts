@@ -18,15 +18,18 @@ export const useWalletStore = create<WalletState>()(
     connector: undefined,
     connectorId: undefined,
     chainId: undefined,
-    setWallet: (data) => set((state) => ({ ...state, ...data })),
-    reset: () =>
+    setWallet: (data) => {
+      set((state) => ({ ...state, ...data }))
+    },
+    reset: () => {
       set({
         address: undefined,
         isConnected: false,
         connector: undefined,
         connectorId: undefined,
         chainId: undefined,
-      }),
+      })
+    },
   })
   // persist(
   //   (set) => ({

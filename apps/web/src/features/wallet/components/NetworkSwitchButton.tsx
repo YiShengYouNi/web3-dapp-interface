@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useSwitchChain, useChainId, useAccount } from 'wagmi'
+import { useSwitchChain } from 'wagmi'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -15,11 +15,15 @@ import {
   getSwitchChainErrorMessage,
   type SwitchChainError,
 } from '../utils/getSwitchChainErrorMessage'
+import { useWalletStore } from '../stores/walletStore'
+import { useShallow } from 'zustand/react/shallow'
 
 export function NetworkSwitchButton() {
   const { switchChainAsync, chains } = useSwitchChain()
-  const chainId = useChainId()
-  const { isConnected } = useAccount()
+
+  const { isConnected, chainId } = useWalletStore(
+    useShallow((s) => ({ isConnected: s.isConnected, chainId: s.chainId }))
+  )
 
   async function handleSwitch(chainId: number) {
     if (!isConnected) {

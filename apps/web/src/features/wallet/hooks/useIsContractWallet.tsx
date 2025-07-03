@@ -1,13 +1,16 @@
-import { useAccount, usePublicClient } from 'wagmi'
+import { usePublicClient } from 'wagmi'
 import { useEffect, useState } from 'react'
+import { useWalletStore } from '../stores/walletStore'
+import { useShallow } from 'zustand/react/shallow'
 
 export function useIsContractWallet(): boolean | undefined {
-  /**
-   * 为什么不用 zustand 存储 address 和 chainId？
-   * 使用原则：以响应式依赖为主，以 store 为状态集中为辅
-   * useAccount() 是 wagmi 内部响应式状态，自动跟踪更新
-   */
-  const { address, chainId } = useAccount()
+  const { address, chainId } = useWalletStore(
+    useShallow((s) => ({
+      address: s.address,
+      chainId: s.chainId,
+    }))
+  ) // 选择器订阅模式
+
   const client = usePublicClient()
   const [isContract, setIsContract] = useState<boolean | undefined>()
 
